@@ -1,0 +1,26 @@
+# version: '3.8'
+
+services:
+  xray:
+    build: ./xray
+    container_name: xray-service
+    ports:
+      - 443:443
+    volumes:
+      - ./config_path:/opt/xray
+      - ./logs/xray:/var/log/xray
+    restart: always
+
+
+  app:
+    build: ./app
+    container_name: xray-app
+    stdin_open: true
+    tty: true
+    command: ["tail", "-f", "/dev/null"]
+    volumes: 
+      - ./config_path:/var/config/
+      - ./logs/app:/var/logs/app
+    depends_on:
+      xray:
+        condition: service_started
