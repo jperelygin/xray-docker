@@ -58,7 +58,7 @@ def write_json_config(as_json, file):
         f.write(json.dumps(as_json, indent=4))
 
 def generate_link(client_uuid, short_key, name):
-    link = f"{client_uuid}@{get_vps_address()}:443"
+    link = f"vless://{client_uuid}@{get_vps_address()}:443"
     link += f"?encryption=none"
     link += f"&flow={FLOW}"
     link += f"&security=reality"
